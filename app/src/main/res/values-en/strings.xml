@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">实名登记</string>
+    <string name="chekin_value">上 网 登 记</string>
+    <string name="logoff_value">下 机 注 销</string>
+    <string name="infomanagement_value">信 息 管 理</string>
+    <string name="addguest_value">添加/登记用户</string>
+    <string name="selectseatcode_value">选择座席号</string>
+    <string name="price_value">实收金额:</string>
+    <string name="pricehint_value">请输入实收金额</string>
+    <string name="personinseat_value">本机使用人员↓</string>
+    <string name="currentpersoninseat_value">本机使用人员↓</string>
+    <string name="logintitle_value">民宿（网吧）实名登记</string>
+    <string name="starttime_value">登记起始时间:</string>
+    <string name="nounavailableroom_value">当前暂无正在使用的机器</string>
+
+    <string name="pleasesroom_value">请先选择座席号</string>
+    <string name="room_value">座席号：</string>
+    <string name="regist_title_value">人员上机登记</string>
+    <string name="no_regist_value">暂无人员使用此机位</string>
+    <string name="zhanyongtishi_value"> 当前座席已处于使用状态，请选择其他座席，或者在"信息管理"中将此房间订单撤销！</string>
+    <string name="setting">设 置</string>
+
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="title1">#333333</color>
+    <color name="title2">#666666</color>
+    <color name="title3">#999999</color>
+    <color name="title4">#c8c8c8</color>
+    <color name="title5">#dfdfdf</color>
+    <color name="red">#9c070f</color>
+    <color name="white">#ffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="halfwhite">#aaffffff</color>#aaffffff
+    <color name="idcard_title">#1579B9</color>
+    <color name="guillotine_background">#3f51b5</color>
+    <color name="guillotine_background_dark">#2F66EC</color>
+    <color name="selected_item_color">#30d1d5</color>
+    <color name="bgColor">#f6f6f6</color>
+</resources>

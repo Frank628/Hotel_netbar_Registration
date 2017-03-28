@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MaterialTextField">
+        <attr name="mtf_cardCollapsedHeight" format="dimension"/>
+        <attr name="mtf_labelColor" format="color"/>
+        <attr name="mtf_image" format="reference"/>
+        <attr name="mtf_hasFocus" format="boolean"/>
+        <attr name="mtf_animationDuration" format="integer"/>
+        <attr name="mtf_openKeyboardOnFocus" format="boolean"/>
+        <attr name="mtf_backgroundColor" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="RoundProgressBar">  
+        <attr name="roundColor" format="color"/>
+        <attr name="roundProgressColor" format="color"/>
+        <attr name="roundWidth" format="dimension"></attr>
+        <attr name="textColor" format="color" />  
+        <attr name="textSize" format="dimension" /> 
+        <attr name="max" format="integer"></attr> 
+        <attr name="textIsDisplayable" format="boolean"></attr>
+        <attr name="style">
+            <enum name="STROKE" value="0"></enum>
+            <enum name="FILL" value="1"></enum>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="RightButtonCheckBox">
+        <attr name="rc_text" format="string"/>
+        <attr name="rc_textSize" format="dimension"/>
+        <attr name="rc_textColor" format="color" />
+        <attr name="rc_checked" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="ValidateEditText">
+        <attr name="vd_textRightColor" format="color"/>
+        <attr name="vd_textErrorColor" format="color"/>
+        <attr name="vd_drawable_right_right" format="reference"/>
+        <attr name="vd_drawable_right_error" format="reference"/>
+        <attr name="vd_drawable_left_right" format="reference"/>
+        <attr name="vd_drawable_left_error" format="reference"/>
+        <attr name="vd_validate_type">
+            <enum name="mobile" value="0"></enum>
+            <enum name="former_name" value="1"></enum>
+            <enum name="email" value="2"></enum>
+            <enum name="id_card" value="3"></enum>
+            <enum name="number_plate" value="4"></enum>
+            <enum name="stature" value="5"></enum>
+            <enum name="room_code" value="6"></enum>
+            <enum name="position_name" value="7"></enum>
+            <enum name="shebao_card" value="8"></enum>
+            <enum name="health_card" value="9"></enum>
+            <enum name="house_code" value="10"></enum>
+            <enum name="address" value="11"></enum>
+            <enum name="normal" value="12"></enum>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="HHEmptyView">
+        <!-- 默认提示文字 -->
+        <attr name="hh_empty_warn_txt" format="string|reference"/>
+        <!-- 默认加载中文字 -->
+        <attr name="hh_empty_loading_txt" format="string|reference"/>
+        <!-- 重新加载按钮文字 -->
+        <attr name="hh_empty_button_txt" format="string|reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="ProgressWheel">
+        <attr name="matProg_progressIndeterminate" format="boolean" />
+        <attr name="matProg_barColor" format="color" />
+        <attr name="matProg_rimColor" format="color" />
+        <attr name="matProg_rimWidth" format="dimension" />
+        <attr name="matProg_spinSpeed" format="float" />
+        <attr name="matProg_barSpinCycleTime" format="integer" />
+        <attr name="matProg_circleRadius" format="dimension" />
+        <attr name="matProg_fillRadius" format="boolean" />
+        <attr name="matProg_barWidth" format="dimension" />
+        <attr name="matProg_linearProgress" format="boolean" />
+    </declare-styleable>
+</resources>
