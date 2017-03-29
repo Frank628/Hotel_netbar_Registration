@@ -19,4 +19,6 @@ public class Constants {
     public static final String DP_NAME= "DP_NAME";//店铺名称
     public static final String ACCOUNT_TYPE= "ACCOUNT_TYPE";//店铺类型
     public static final String HRS_NAME= "HRS_NAME";//业主名字
+
+    public static final String IS_NEED_GUID= "IS_NEED_GUID";//是否需要启用向导
 }

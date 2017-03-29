@@ -9,6 +9,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class StatisticsFragment extends LazyFragment {
     TextView tv_pcount;
     TextView tv_cash;
     Button btn_submit;
+    RelativeLayout rl_statistics;
     public static StatisticsFragment newInstance(){
         StatisticsFragment statisticsFragment=new StatisticsFragment();
 //        Bundle bundle = new Bundle();
@@ -55,6 +57,7 @@ public class StatisticsFragment extends LazyFragment {
         tv_endtime=(TextView) findViewById(R.id.tv_endtime);
         tv_pcount=(TextView) findViewById(R.id.tv_pcount);
         tv_cash=(TextView) findViewById(R.id.tv_cash);
+        rl_statistics=(RelativeLayout) findViewById(R.id.rl_statistics);
         Calendar ca = Calendar.getInstance();
         mYear = ca.get(Calendar.YEAR);
         mMonth = ca.get(Calendar.MONTH);
@@ -94,6 +97,7 @@ public class StatisticsFragment extends LazyFragment {
     }
 
     private void search(){
+        rl_statistics.setVisibility(View.GONE);
         showProcessDialog("查询中...");
         RequestParams params=new RequestParams(Constants.URL+"HostelService.aspx");
         params.addBodyParameter("type","getcount");
@@ -103,8 +107,6 @@ public class StatisticsFragment extends LazyFragment {
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.i("una",result);
-                hideProcessDialog();
                 processData(result);
             }
             @Override
@@ -123,9 +125,11 @@ public class StatisticsFragment extends LazyFragment {
     }
 
     private void processData(String json){
+        hideProcessDialog();
         try {
             StatisticsResult statisticsResult= GsonTools.changeGsonToBean(json,StatisticsResult.class);
             if (statisticsResult.code==0){
+                rl_statistics.setVisibility(View.VISIBLE);
                 Toast.makeText(getActivity(),"查询成功",Toast.LENGTH_SHORT).show();
                 tv_pcount.setText("人次："+statisticsResult.data.person);
                 tv_cash.setText("总收入："+statisticsResult.data.price);

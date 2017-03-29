@@ -39,6 +39,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommonUtils {
+
+	public static int restDays(String begin){
+		int days=0;
+
+		return days;
+	}
 	public static void changeUserType(Context context,String sta){
 //        String sta = Store.getLanuageIsChinese() ? "zh" : "en";//这是SharedPreferences工具类，用于保存设置，代码很简单，自己实现吧
 		// 本地语言设置

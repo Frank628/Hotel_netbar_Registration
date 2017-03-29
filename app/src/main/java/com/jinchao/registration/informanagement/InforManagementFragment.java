@@ -30,7 +30,7 @@ public class InforManagementFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        float unSelectSize = 12;
+        float unSelectSize = 15;
         float selectSize = unSelectSize * 1.3f;
         scrollIndicatorView.setOnTransitionListener(new OnTransitionTextListener().setColor(0xFF2196F3, Color.GRAY).setSize(selectSize, unSelectSize));
         scrollIndicatorView.setScrollBar(new ColorBar(getActivity(), 0xFF2196F3, 4));

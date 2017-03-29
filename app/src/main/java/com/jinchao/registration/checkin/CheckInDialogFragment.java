@@ -305,7 +305,7 @@ public class CheckInDialogFragment extends BaseDialogFragment {
         params.addBodyParameter("rz_status", "0");
         params.addBodyParameter("order_id", seat.getGuid());
         params.addBodyParameter("tetelphone", edt_phone.getText().toString().trim());
-
+        params.addBodyParameter("dpname", MyInforManager.getDpName(getActivity()));
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
