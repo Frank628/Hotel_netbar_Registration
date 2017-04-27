@@ -7,7 +7,8 @@ import android.os.Environment;
  */
 
 public class Constants {
-    public static final String CANARO_EXTRA_BOLD_PATH = "fonts/XQN.otf";
+    public static final String CANARO_EXTRA_BOLD_PATH = "fonts/TT.ttf";
+    public static final String CANARO_EXTRA_BOLD_PATH2 = "fonts/fzct2.otf";
     public static final String DB_PATH= Environment.getExternalStorageDirectory().getAbsolutePath()+"/";
 
     public static final String URL="http://222.92.144.66:91/population/";

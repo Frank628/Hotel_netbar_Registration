@@ -57,6 +57,12 @@ public class SelectSeatUnRegistPopWindow extends PopupWindow{
         viewfipper.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         gv =(GridView) mMenuView.findViewById(R.id.gv);
         loadingView=(LoadingView) mMenuView.findViewById(R.id.loadingview);
+        mMenuView.findViewById(R.id.ib_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SelectSeatUnRegistPopWindow.this.dismiss();
+            }
+        });
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

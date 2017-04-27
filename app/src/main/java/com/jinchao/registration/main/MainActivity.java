@@ -22,6 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.Common;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.jinchao.registration.Base.BaseDialogFragment;
@@ -64,7 +65,10 @@ public class MainActivity extends BaseReaderActiviy implements View.OnClickListe
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle(null);
         }
-
+        if (!Common.init(this)){
+            Toast.makeText(this, "身份证云终端开发包初始化失败！", Toast.LENGTH_SHORT).show();
+            finish();
+        }
         guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
         root.addView(guillotineMenu);
         tv_username=(CanaroTextView)guillotineMenu.findViewById(R.id.tv_account);

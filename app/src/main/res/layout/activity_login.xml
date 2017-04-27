@@ -11,13 +11,14 @@
         android:orientation="vertical"
         android:background="@android:color/white"
         android:layout_weight="2">
-    <com.jinchao.registration.widget.CanaroTextView
+    <com.jinchao.registration.widget.CanaroTextView2
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:drawableTop="@drawable/jinghui"
         android:layout_marginTop="15dp"
         android:text="@string/logintitle_value"
+        android:textStyle="bold"
         android:drawablePadding="15dp"
         android:textSize="20sp"
         android:textColor="@color/title1"/>

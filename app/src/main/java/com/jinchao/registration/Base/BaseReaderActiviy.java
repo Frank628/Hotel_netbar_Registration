@@ -66,7 +66,11 @@ public class BaseReaderActiviy extends BaseActivity {
 	public void onResume() {
 		super.onResume();
 		if (nfcAdapter != null){
-			nfcAdapter.enableForegroundDispatch(this, nfcPi, nfcIfs, techLists);
+			try {
+				nfcAdapter.enableForegroundDispatch(this, nfcPi, nfcIfs, techLists);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

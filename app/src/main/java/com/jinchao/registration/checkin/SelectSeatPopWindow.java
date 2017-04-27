@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.jinchao.registration.config.DbConfig;
 import com.jinchao.registration.config.MyInforManager;
 import com.jinchao.registration.dbtable.SeatTable;
 import com.jinchao.registration.jsonbean.AvailableRoomResult;
+import com.jinchao.registration.logoff.SelectSeatUnRegistPopWindow;
 import com.jinchao.registration.main.LoginActivity;
 import com.jinchao.registration.utils.GsonTools;
 import com.jinchao.registration.widget.LoadingView;
@@ -67,6 +69,12 @@ public class SelectSeatPopWindow extends PopupWindow{
         viewfipper.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         gv =(GridView) mMenuView.findViewById(R.id.gv);
         loadingView=(LoadingView) mMenuView.findViewById(R.id.loadingview);
+        mMenuView.findViewById(R.id.ib_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SelectSeatPopWindow.this.dismiss();
+            }
+        });
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

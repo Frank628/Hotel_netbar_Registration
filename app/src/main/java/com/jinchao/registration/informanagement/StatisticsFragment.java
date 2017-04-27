@@ -102,8 +102,8 @@ public class StatisticsFragment extends LazyFragment {
         RequestParams params=new RequestParams(Constants.URL+"HostelService.aspx");
         params.addBodyParameter("type","getcount");
         params.addBodyParameter("h_id", MyInforManager.getUserID(getActivity()));
-        params.addBodyParameter("starttime",tv_starttime.getText().toString().trim());
-        params.addBodyParameter("endtime", tv_endtime.getText().toString().trim());
+        params.addBodyParameter("starttime",tv_starttime.getText().toString().trim()+" 00:00:01");
+        params.addBodyParameter("endtime", tv_endtime.getText().toString().trim()+" 23:59:59");
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
