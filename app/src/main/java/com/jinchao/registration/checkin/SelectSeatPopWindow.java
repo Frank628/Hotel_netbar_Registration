@@ -79,14 +79,14 @@ public class SelectSeatPopWindow extends PopupWindow{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 AvailableRoomResult.AvailableRoomOne code=(AvailableRoomResult.AvailableRoomOne)(((GridView)adapterView).getItemAtPosition(i));
-                if (!code.r_enable.equals("0")){
-                    new MaterialDialog.Builder(context)
-                            .title("提示")
-                            .content(context.getResources().getString(R.string.zhanyongtishi_value))
-                            .positiveText("确认")
-                            .show();
-                    return;
-                }
+//                if (!code.r_enable.equals("0")){
+//                    new MaterialDialog.Builder(context)
+//                            .title("提示")
+//                            .content(context.getResources().getString(R.string.zhanyongtishi_value))
+//                            .positiveText("确认")
+//                            .show();
+//                    return;
+//                }
                 onEnsureClickListener.OnEnSureClick(code);
                 SelectSeatPopWindow.this.dismiss();
             }

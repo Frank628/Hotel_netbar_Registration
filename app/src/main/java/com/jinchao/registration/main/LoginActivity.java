@@ -34,6 +34,9 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import static java.security.AccessController.getContext;
@@ -104,8 +107,9 @@ public class LoginActivity extends BaseLoginActivity{
         });
     }
     private void processData(String json){
+        Log.i("login",json);
         try {
-            LoginResult loginResult = GsonTools.changeGsonToBean(json,LoginResult.class);
+            final LoginResult loginResult = GsonTools.changeGsonToBean(json,LoginResult.class);
             if (loginResult.code==0){
                 if (!loginResult.data.srv_enable.trim().equals("1")){
                     new MaterialDialog.Builder(this)
@@ -115,6 +119,34 @@ public class LoginActivity extends BaseLoginActivity{
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    LoginActivity.this.finish();
+                                }
+                            })
+                            .show();
+                    return;
+                }
+                if(isLeftOneMonth(loginResult.data.srv_endtime)){
+                    new MaterialDialog.Builder(this)
+                            .title("提示")
+                            .content("您的账号服务截至时间为"+loginResult.data.srv_endtime+",请及时续费，以免影响正常使用！")
+                            .positiveText("确认")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    if (loginResult.data.hrs_type.equals("1")){
+                                        ((MyApplication)getApplication()).setAccountType("en");
+                                    }else{
+                                        ((MyApplication)getApplication()).setAccountType("zh");
+                                    }
+                                    MyInforManager.setUserName(LoginActivity.this,loginResult.data.login_name);
+                                    MyInforManager.setPassword(LoginActivity.this,edt_password.getText().toString().trim());
+                                    MyInforManager.setUserID(LoginActivity.this,loginResult.data.id);
+                                    MyInforManager.setCurrentAccountType(LoginActivity.this,loginResult.data.hrs_type);
+                                    MyInforManager.setDpName(LoginActivity.this,loginResult.data.dp_name);
+                                    MyInforManager.setHrsName(LoginActivity.this,loginResult.data.hrs_name);
+                                    MyInforManager.setSrvTime(LoginActivity.this,loginResult.data.srv_endtime);
+                                    Intent intent =new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
                                     LoginActivity.this.finish();
                                 }
                             })
@@ -195,5 +227,26 @@ public class LoginActivity extends BaseLoginActivity{
             e.printStackTrace();
         }
 
+    }
+
+    private boolean isLeftOneMonth(String lastDF){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        try{
+            Date currentDate = new Date();
+            Date lastDate = format.parse(lastDF);
+            int days=differentDaysByMillisecond(currentDate,lastDate);
+            System.out.println("两个日期的差距：" + days);
+            if (days<30)
+                return true;
+            else
+                return false;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public static int differentDaysByMillisecond(Date date1,Date date2){
+        int days = (int) ((date2.getTime() - date1.getTime()) / (1000*3600*24));
+        return days;
     }
 }

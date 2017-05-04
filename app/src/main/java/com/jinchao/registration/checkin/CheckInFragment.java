@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.caihua.cloud.common.entity.PersonInfo;
 import com.jinchao.registration.Base.BaseDialogFragment;
 import com.jinchao.registration.Base.BaseFragment;
@@ -55,6 +56,7 @@ public class CheckInFragment extends BaseFragment {
     @ViewInject(R.id.lv)ListView lv;
     DbManager db;
     SeatTable currentSeatTable;
+    private int currentPersonInRoom=0,currentRoomBeds=0;
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -66,7 +68,19 @@ public class CheckInFragment extends BaseFragment {
             @Override
             public void OnEnSureClick(AvailableRoomResult.AvailableRoomOne str) {
                 tv_code.setText(str.r_name);
-                currentSeatTable=new SeatTable(str.r_id,str.r_name,CommonUtils.GenerateGUID(), MyInforManager.getCurrentAccountType(getActivity()));
+                try {
+                    currentRoomBeds=Integer.parseInt(str.r_beds);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                if(!str.r_enable.equals("0")){
+                    currentSeatTable=new SeatTable(str.r_id,str.r_name,TextUtils.isEmpty(str.order_id)?CommonUtils.GenerateGUID():str.order_id, MyInforManager.getCurrentAccountType(getActivity()));
+                    initSeatPersons();
+                }else{
+                    lv.setAdapter(null);
+                    currentPersonInRoom=0;
+                    currentSeatTable=new SeatTable(str.r_id,str.r_name,CommonUtils.GenerateGUID(), MyInforManager.getCurrentAccountType(getActivity()));
+                }
             }
         });
         selectSeatPopWindow.showAtLocation(root, Gravity.NO_GRAVITY,0,0);
@@ -76,6 +90,14 @@ public class CheckInFragment extends BaseFragment {
         String code=tv_code.getText().toString().trim();
         if (TextUtils.isEmpty(code)||code.equals("请选择")){
             Toast.makeText(getActivity(),getResources().getString(R.string.pleasesroom_value),Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (currentPersonInRoom>=(currentRoomBeds==1?2:currentRoomBeds)){
+            new MaterialDialog.Builder(getActivity())
+                            .title("提示")
+                            .content("该房间只有"+currentRoomBeds+"个床位，只能登记"+(currentRoomBeds==1?2:currentRoomBeds)+"人！如床位数有变动请联系我们！")
+                            .positiveText("确认")
+                            .show();
             return;
         }
         FragmentTransaction ft=getChildFragmentManager().beginTransaction();
@@ -112,6 +134,7 @@ public class CheckInFragment extends BaseFragment {
         try {
             List<PersonTable> list=currentSeatTable.getPersonsInSeat(db);
             if (list!=null){
+                currentPersonInRoom=list.size();
                 lv.setAdapter(new CommonAdapter<PersonTable>(getActivity(),list,R.layout.item_already_regist) {
                     @Override
                     public void convert(ViewHolder helper,final PersonTable item, int position) {
@@ -126,6 +149,9 @@ public class CheckInFragment extends BaseFragment {
                 });
             }
         } catch (DbException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e){
+            lv.setAdapter(null);
             e.printStackTrace();
         }
     }

@@ -16,6 +16,7 @@ public class AvailableRoomResult {
         public String r_id="";
         public String r_name="";
         public String r_price="";
+        public String order_id="";
 
     }
 }
