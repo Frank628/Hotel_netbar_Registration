@@ -7,4 +7,6 @@
     <dimen name="mtf_cardHeight_initial">2dp</dimen>
     <dimen name="mtf_cardHeight_final">48dp</dimen>
     <dimen name="mtf_corner_radius">3dp</dimen>
+
+    <dimen name="actionbar_dimen">56dp</dimen>
 </resources>

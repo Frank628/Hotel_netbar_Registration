@@ -25,6 +25,7 @@ import com.jinchao.registration.jsonbean.VersionResult;
 import com.jinchao.registration.service.DownLoadService;
 import com.jinchao.registration.utils.CommonUtils;
 import com.jinchao.registration.utils.GsonTools;
+import com.jinchao.registration.utils.SharePrefUtil;
 import com.jinchao.registration.widget.MaterialTextField;
 
 import org.xutils.common.Callback;
@@ -43,9 +44,10 @@ import static java.security.AccessController.getContext;
 
 
 /**
+ *
  * Created by user on 2017/3/17.
  */
-@ContentView(R.layout.activity_login)
+@ContentView(R.layout.activity_login_lt)
 public class LoginActivity extends BaseLoginActivity{
     @ViewInject(R.id.edt_user)EditText edt_user;
     @ViewInject(R.id.edt_password)EditText edt_password;
@@ -84,6 +86,30 @@ public class LoginActivity extends BaseLoginActivity{
     }
 
     private void Login(String name,String password){
+        int version=SharePrefUtil.getInt(LoginActivity.this,Constants.LAST_VERSION,0);
+        boolean isForce=SharePrefUtil.getBoolean(LoginActivity.this,Constants.FORCE_UPDATE,false);
+        final String desFile=SharePrefUtil.getString(LoginActivity.this,Constants.APK_URL,"");
+        if((version>CommonUtils.getVersionCode(LoginActivity.this)&&(isForce))){
+            new MaterialDialog.Builder(this)
+                    .title("提示")
+                    .content("当前版本过低，请立即更新至最新版本，否则无法正常使用！")
+                    .positiveText("确认")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            if(!TextUtils.isEmpty(desFile)) {
+                                Intent serviceDownload = new Intent(LoginActivity.this, DownLoadService.class);
+                                if (CommonUtils.isServiceRunning(LoginActivity.this, "com.jinchao.registration.service.DownLoadService")) {
+                                    LoginActivity.this.stopService(serviceDownload);
+                                }
+                                serviceDownload.putExtra("url", desFile);
+                                LoginActivity.this.startService(serviceDownload);
+                            }
+                        }
+                    })
+                    .show();
+            return;
+        }
         showProcessDialog("登录中...");
         RequestParams params=new RequestParams(Constants.URL+"HostelService.aspx");
         params.addBodyParameter("type","login");
@@ -145,8 +171,7 @@ public class LoginActivity extends BaseLoginActivity{
                                     MyInforManager.setDpName(LoginActivity.this,loginResult.data.dp_name);
                                     MyInforManager.setHrsName(LoginActivity.this,loginResult.data.hrs_name);
                                     MyInforManager.setSrvTime(LoginActivity.this,loginResult.data.srv_endtime);
-                                    Intent intent =new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
+                                    toMain();
                                     LoginActivity.this.finish();
                                 }
                             })
@@ -165,8 +190,7 @@ public class LoginActivity extends BaseLoginActivity{
                 MyInforManager.setDpName(this,loginResult.data.dp_name);
                 MyInforManager.setHrsName(this,loginResult.data.hrs_name);
                 MyInforManager.setSrvTime(this,loginResult.data.srv_endtime);
-                Intent intent =new Intent(this, MainActivity.class);
-                startActivity(intent);
+                toMain();
                 LoginActivity.this.finish();
             }else{
                 Toast.makeText(this,loginResult.msg,Toast.LENGTH_SHORT).show();
@@ -174,6 +198,10 @@ public class LoginActivity extends BaseLoginActivity{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    private void toMain(){
+        Intent intent =new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
     private void checkUpdate(){
         RequestParams params=new RequestParams(Constants.URL+"VersionInfor.aspx");
@@ -204,24 +232,47 @@ public class LoginActivity extends BaseLoginActivity{
             String[] str =versionResult.versionNum.trim().split("\\.");
             String versionStr=str[0]+str[1]+str[2];
             int new_version =Integer.parseInt(versionStr);
+            SharePrefUtil.saveInt(LoginActivity.this,Constants.LAST_VERSION,new_version);
+            SharePrefUtil.saveBoolean(LoginActivity.this,Constants.FORCE_UPDATE,versionResult.isForce);
+            SharePrefUtil.saveString(LoginActivity.this,Constants.APK_URL,versionResult.desFile);
             if (new_version> CommonUtils.getVersionCode(LoginActivity.this)) {
-                new MaterialDialog.Builder(LoginActivity.this)
-                        .title("提示")
-                        .content("发现新版本，请及时更新！")
-                        .positiveText("立即更新")
-                        .negativeText("稍后再说")
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                Intent serviceDownload=new Intent(LoginActivity.this,DownLoadService.class);
-                                if (CommonUtils.isServiceRunning(LoginActivity.this, "com.jinchao.registration.service.DownLoadService")) {
-                                    LoginActivity.this.stopService(serviceDownload);
+                if (versionResult.isForce){
+                    new MaterialDialog.Builder(LoginActivity.this)
+                            .title("提示")
+                            .content("发现新版本，请及时更新,否则将无法使用！")
+                            .positiveText("立即更新")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    Intent serviceDownload=new Intent(LoginActivity.this,DownLoadService.class);
+                                    if (CommonUtils.isServiceRunning(LoginActivity.this, "com.jinchao.registration.service.DownLoadService")) {
+                                        LoginActivity.this.stopService(serviceDownload);
+                                    }
+                                    serviceDownload.putExtra("url", versionResult.desFile);
+                                    LoginActivity.this.startService(serviceDownload);
                                 }
-                                serviceDownload.putExtra("url", versionResult.desFile);
-                                LoginActivity.this.startService(serviceDownload);
-                            }
-                        })
-                        .show();
+                            })
+                            .show();
+                }else{
+                    new MaterialDialog.Builder(LoginActivity.this)
+                            .title("提示")
+                            .content("发现新版本，请及时更新！")
+                            .positiveText("立即更新")
+                            .negativeText("稍后再说")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    Intent serviceDownload=new Intent(LoginActivity.this,DownLoadService.class);
+                                    if (CommonUtils.isServiceRunning(LoginActivity.this, "com.jinchao.registration.service.DownLoadService")) {
+                                        LoginActivity.this.stopService(serviceDownload);
+                                    }
+                                    serviceDownload.putExtra("url", versionResult.desFile);
+                                    LoginActivity.this.startService(serviceDownload);
+                                }
+                            })
+                            .show();
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();

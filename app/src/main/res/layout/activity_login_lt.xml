@@ -1,0 +1,94 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4644aa"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:layout_weight="2">
+    <com.jinchao.registration.widget.CanaroTextView2
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawableTop="@drawable/logo_lt"
+        android:layout_marginTop="15dp"
+        android:text="民宿旅客实名登记"
+        android:textStyle="bold"
+        android:drawablePadding="15dp"
+        android:textSize="24sp"
+        android:textColor="@color/title1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="3">
+        <com.jinchao.registration.widget.MaterialTextField
+            android:id="@+id/mt_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="12dp"
+            app:mtf_cardCollapsedHeight="2dp"
+            app:mtf_hasFocus="false"
+            app:mtf_image="@drawable/icon_user"
+            app:mtf_openKeyboardOnFocus="true">
+            <EditText
+                android:id="@+id/edt_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="输入用户名"
+                android:maxLines="20"
+                android:textColor="@color/title2"
+                android:textColorHint="@color/title3"
+                android:inputType="text"
+                android:textSize="16sp"/>
+
+        </com.jinchao.registration.widget.MaterialTextField>
+
+        <com.jinchao.registration.widget.MaterialTextField
+            android:id="@+id/mt_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            app:mtf_cardCollapsedHeight="2dp"
+            app:mtf_hasFocus="false"
+            app:mtf_image="@drawable/icon_password"
+            app:mtf_openKeyboardOnFocus="true">
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="输入密码"
+                android:maxLines="20"
+                android:textColor="@color/title2"
+                android:textColorHint="@color/title3"
+                android:inputType="textPassword"
+                android:textSize="16sp" />
+
+        </com.jinchao.registration.widget.MaterialTextField>
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/btn_orange_click"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:text="登  录"
+            />
+        </LinearLayout>
+</LinearLayout>

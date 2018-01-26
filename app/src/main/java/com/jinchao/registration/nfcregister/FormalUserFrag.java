@@ -16,7 +16,7 @@ import java.util.Date;
 
 
 public class FormalUserFrag extends Fragment {
-
+    Button btn_replace;
     Button copyActiveCodeBtn;
     TextView startTimeTv;
     TextView endTimeTv;
@@ -46,6 +46,7 @@ public class FormalUserFrag extends Fragment {
         startTimeTv = (TextView) view.findViewById(R.id.startTimeTV);
         endTimeTv = (TextView) view.findViewById(R.id.endTimeTV);
         activeCodeTv = (TextView) view.findViewById(R.id.activeCodeTV);
+        btn_replace= (Button) view.findViewById(R.id.btn_replace);
         Bundle args = getArguments();
         ActiveInfo activeInfo = null;
         if (args != null) {
@@ -67,6 +68,12 @@ public class FormalUserFrag extends Fragment {
 //                clipboardManager.setPrimaryClip(clip);
 //                Toast.makeText(getActivity(), "激活码已复制", Toast.LENGTH_SHORT).show();
                   getActivity().onBackPressed();
+            }
+        });
+        btn_replace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NFCActiveActivity)getActivity()).mainVP.setCurrentItem(NFCActiveViewPagerAdapter.ACTIVE_FRAG, false);
             }
         });
         return view;
